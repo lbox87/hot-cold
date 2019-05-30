@@ -6,14 +6,20 @@ export default class UserGuess extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            numbersGuessed: []
+            numbersGuessed: [],
+            alreadyGuessed: ""
         }
     }
     submitNumber = (event) => {
         event.preventDefault();
         console.log(this.input.value)
+        this.setState({alreadyGuessed: ""})
         let currentNumbers = this.state.numbersGuessed;
-        currentNumbers.push(this.input.value)
+        console.log(currentNumbers.includes(this.input.value))
+        if (currentNumbers.includes(this.input.value)) {
+            this.setState({alreadyGuessed: "You already guessed this number!"})
+        }
+        else {currentNumbers.push(this.input.value)}
         
         this.setState({numbersGuessed: currentNumbers})
         console.log(this.state.numbersGuessed)
@@ -47,6 +53,7 @@ export default class UserGuess extends React.Component {
           </button>
                 </form>
                 <GuessedNumbers />
+                <p>{this.state.alreadyGuessed}</p>
             </div>
         );
     }
