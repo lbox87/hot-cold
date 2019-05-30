@@ -1,15 +1,20 @@
 import React from 'react';
 import './guess-box.css';
-import GuessedNumbers from './guessed-numbers';
 import UserGuess from './user-guess';
 import HotCold from './hot-cold';
 
-export default function GuessBox(props) {
-  return (
-    <div>   
-        <UserGuess />
-        <GuessedNumbers />
-        <HotCold />
-    </div>
-  );
+export default class GuessBox extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+    render() {
+        return (
+            <div>
+            <UserGuess />
+            <HotCold />
+            <p>the correct answer is {this.props.number} </p>
+        </div>
+        );
+    }
 }
