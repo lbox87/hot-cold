@@ -7,9 +7,16 @@ export default class UserGuess extends React.Component {
         super(props);
         this.state = {
             numbersGuessed: [],
-            alreadyGuessed: ""
+            alreadyGuessed: "",
+            correctAnswer: Math.floor(Math.random() * 100) + 1,
+            hotCold: ""
         }
     }
+
+    inRange = (x, min, max) => {
+        return ((x-min)*(x-max) <= 0);
+    }
+
     submitNumber = (event) => {
         event.preventDefault();
         this.setState({alreadyGuessed: ""})
@@ -17,8 +24,21 @@ export default class UserGuess extends React.Component {
         if (currentNumbers.includes(this.input.value)) {
             this.setState({alreadyGuessed: "You already guessed this number! Try again!"})
         }
-        else {currentNumbers.push(this.input.value)}
-        this.setState({numbersGuessed: currentNumbers})
+        else if (parseInt(this.input.value) == this.state.correctAnswer){
+            this.setState({hotCold: "CORRECT!"})
+        }
+        
+        else if (this.inRange(this.input.value,this.state.correctAnswer-5,this.state.correctAnswer+5)){
+            this.setState({hotCold: "HOT!"})
+            currentNumbers.push(this.input.value)
+            this.setState({numbersGuessed: currentNumbers})  
+        }
+
+        else {
+            this.setState({hotCold: "cold."})
+            currentNumbers.push(this.input.value)
+            this.setState({numbersGuessed: currentNumbers})  
+        }
     }
 
     render() {
@@ -30,7 +50,8 @@ export default class UserGuess extends React.Component {
                 </form>
                 <p>{this.state.alreadyGuessed}</p>
                 <GuessedNumbers numbers={this.state.numbersGuessed}/>
-                
+                <p>the correct answer is {this.state.correctAnswer}</p>
+                <p>you are {this.state.hotCold}</p>
             </div>
         );
     }

@@ -13,7 +13,7 @@ export default class GuessBox extends React.Component {
             <div>
             <UserGuess />
             <HotCold />
-            <p>the correct answer is {this.props.number} </p>
+            {/* <p>the correct answer is {this.props.number} </p> */}
         </div>
         );
     }
